@@ -18,6 +18,8 @@ public class ParkingSpaceDtoFactory {
         return ParkingSpaceDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .placeStatus(entity.getPlaceStatus())
+                .paymentStatus(entity.getPayment())
                 .createdAt(entity.getCreatedAt())
                 .car(carDtoFactory.makeCarDto(entity.getCar()))
                 .build();

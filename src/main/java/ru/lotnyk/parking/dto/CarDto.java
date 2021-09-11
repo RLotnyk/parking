@@ -13,14 +13,12 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CarDto {
 
-    @NonNull
     Long id;
 
-    @NonNull
     @JsonProperty("full_name")
     String fullName;
 
-    @NonNull
+    @JsonProperty("car_mark")
     String mark;
 
     @JsonProperty("created_at")

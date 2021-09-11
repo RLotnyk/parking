@@ -26,8 +26,10 @@ public class ParkingSpaceEntity {
     String name;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
-    Payment payment = Payment.SUCCESS;
+    Payment payment;
+
+    @Enumerated(EnumType.STRING)
+    Place placeStatus;
 
     @Builder.Default
     Instant createdAt = Instant.now();
