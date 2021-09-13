@@ -6,15 +6,13 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lotnyk.parking.dto.CarDto;
-import ru.lotnyk.parking.entities.CarEntity;
-import ru.lotnyk.parking.exceptions.BadRequestException;
-import ru.lotnyk.parking.exceptions.NotFoundException;
+import ru.lotnyk.parking.entity.CarEntity;
+import ru.lotnyk.parking.exception.BadRequestException;
 import ru.lotnyk.parking.repository.CarRepository;
 import ru.lotnyk.parking.utils.CarDtoFactory;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,24 +25,25 @@ public class CarController {
 
     CarRepository carRepository;
 
-    public static final String CREATE_CAR = "/api/parking/car/";
-    public static final String GET_ALL_CARS = "/api/parking/car/";
-    public static final String GET_CAR = "/api/parking/car/{car_id}/";
-    public static final String DELETE_CAR = "/api/parking/car/{car_id}/";
+    ControllerHelper controllerHelper;
+
+    public static final String CREATE_CAR = "/api/parking/car";
+    public static final String GET_ALL_CARS = "/api/parking/car";
+    public static final String DELETE_CAR = "/api/parking/car/{car_id}";
 
 
 
-    @PostMapping(CREATE_CAR)
+    @PostMapping(value = CREATE_CAR)
     public CarDto createCar(
             @RequestParam(value = "owner", required = false) String owner,
-            @RequestParam(value = "brand") String brand) {
-
-        if (brand.trim().isEmpty()) {
-            throw new BadRequestException("Car Brand Can't be empty.");
+            @RequestParam(value="number") String number
+    ) {
+        if (number.trim().isEmpty()) {
+            throw new BadRequestException("Car Number Can't be empty.");
         }
         CarEntity car = carRepository.saveAndFlush(CarEntity.builder()
-                .ownerName(owner)
-                .markAuto(brand)
+                .owner(owner)
+                .number(number)
                 .build()
         );
 
@@ -58,21 +57,10 @@ public class CarController {
                 .map(carDtoFactory::makeCarDto).collect(Collectors.toList());
     }
 
-    @GetMapping(GET_CAR)
-    public CarDto getCar(@PathVariable("car_id") Long carId) {
-        CarEntity carEntity = Optional.of(
-                carRepository.getById(carId)).orElseThrow(() -> new NotFoundException(
-                        String.format("Car: %s Not Found", carId)));
-        return carDtoFactory.makeCarDto(carEntity);
-    }
-
     @DeleteMapping(DELETE_CAR)
     public ResponseEntity<Boolean> deleteCar(@PathVariable("car_id") Long carId) {
-        CarEntity carEntity = Optional.of(
-                carRepository.getById(carId)).orElseThrow(() -> new NotFoundException(
-                String.format("Car: %s Not Found", carId)));
+        CarEntity carEntity = controllerHelper.getCarEntityByIdOrThrowException(carId);
         carRepository.delete(carEntity);
-        return ResponseEntity.of(Optional.of(true));
+        return ResponseEntity.ok(true);
     }
-
 }

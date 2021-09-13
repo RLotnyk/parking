@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/parking
+    url: jdbc:postgresql://localhost/parking_system
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver

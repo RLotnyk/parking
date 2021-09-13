@@ -1,5 +1,4 @@
-package ru.lotnyk.parking.entities;
-
+package ru.lotnyk.parking.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,8 +14,8 @@ import java.time.Instant;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "parking_space")
-public class ParkingSpaceEntity {
+@Table(name = "parking")
+public class PlaceParkingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +25,15 @@ public class ParkingSpaceEntity {
     String name;
 
     @Enumerated(EnumType.STRING)
-    Payment payment;
+    PaymentStatus payment;
 
     @Enumerated(EnumType.STRING)
-    Place placeStatus;
+    PlaceStatus place;
 
     @Builder.Default
     Instant createdAt = Instant.now();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     CarEntity car;
 
 }

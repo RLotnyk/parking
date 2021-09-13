@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.Instant;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,14 +13,11 @@ public class CarDto {
 
     Long id;
 
-    @JsonProperty("full_name")
-    String fullName;
+    @JsonProperty("car_owner")
+    String owner;
 
-    @JsonProperty("car_mark")
-    String mark;
-
-    @JsonProperty("created_at")
-    Instant createdAt;
-
+    @NonNull
+    @JsonProperty("car_number")
+    String number;
 
 }

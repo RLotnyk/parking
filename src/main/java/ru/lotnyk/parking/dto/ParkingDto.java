@@ -4,8 +4,8 @@ package ru.lotnyk.parking.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.lotnyk.parking.entities.Place;
-import ru.lotnyk.parking.entities.Payment;
+import ru.lotnyk.parking.entity.PlaceStatus;
+import ru.lotnyk.parking.entity.PaymentStatus;
 
 import java.time.Instant;
 
@@ -14,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ParkingSpaceDto {
+public class ParkingDto {
 
     @NonNull
     Long id;
@@ -26,10 +26,10 @@ public class ParkingSpaceDto {
     Instant createdAt;
 
     @JsonProperty("payment_status")
-    Payment paymentStatus;
+    PaymentStatus paymentStatus;
 
     @JsonProperty("place_status")
-    Place placeStatus;
+    PlaceStatus placeStatus;
 
     CarDto car;
 

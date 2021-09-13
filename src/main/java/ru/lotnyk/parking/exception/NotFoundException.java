@@ -1,4 +1,4 @@
-package ru.lotnyk.parking.exceptions;
+package ru.lotnyk.parking.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

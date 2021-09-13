@@ -1,4 +1,4 @@
-package ru.lotnyk.parking.exceptions;
+package ru.lotnyk.parking.exception;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
